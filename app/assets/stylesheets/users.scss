@@ -1,0 +1,72 @@
+// Place all the styles related to the Users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+//**************************************************************
+//
+// index.html css starts here
+//
+//**************************************************************
+#users-index{
+	h2{
+		margin: 0 auto;
+	}
+	.entry{
+		list-style-position: inside;
+	}
+
+	@media(min-width:576px){
+		.entry hr{
+			display: none;
+		}
+	}
+
+}
+//**************************************************************
+//
+// new.html css starts here
+//
+//**************************************************************
+
+#users-new{
+	#register{
+		display: inline-block;
+		padding: 1.25em;
+		width: 100%;
+		min-width: 25em;
+	}
+	#login{
+		display: inline-block;
+		vertical-align: top;
+		padding: 1.25em;
+		width: 100%;
+		min-width: 25em;
+	}
+
+	@media(min-width:900px){
+		#register{
+			width: 49%;
+		}
+		#login{
+			width: 50%;
+			float: right;
+		}
+	}
+}
+
+//**************************************************************
+//
+// show.html css starts here
+//
+//**************************************************************
+#users-show{
+	h5{
+		font-size: 1.6em;
+		line-height: 1.8em;
+	}
+	.post-frame{
+			max-height: 21.875em;
+			overflow-y: auto;
+	}
+}

@@ -1,0 +1,79 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ */
+ @import "bootstrap";
+ @import "reviews.scss";
+ @import "comments.scss";
+ @import "sessions.scss";
+ @import "users.scss";
+ @import "kaminari.scss";
+
+ body{
+   background-color: #FFFAE2;
+   padding-bottom: 2.5em;
+
+ 	/* CSS reset */
+ 	vertical-align: baseline;
+ 	font-weight: inherit;
+ 	font-family: inherit;
+ 	font-style: inherit;
+ 	font-size: 100%;
+ 	border: 0 none;
+ 	outline: 0;
+ 	padding: 0;
+ 	margin: 0;
+ }
+ #navbar-wrapper{
+   padding: 0.625em;
+   background-color: #92977E;
+ }
+ #navbar{
+ 	background-color:#EADDA6;
+ 	color:#5F5449;
+ 	font-size: 0.813em;
+  padding: 0;
+ 	border: 0;
+ 	margin-bottom: 0;   /* Overide Bootstrap's deafult navbar margin */
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    font-size: 1.875em;
+    line-height: 4.375em;
+    color:#5F5449;
+  }
+  p, div {
+    font-family: 'Goudy Bookletter 1911', Georgia, Times, serif;
+    font-size: 15px;
+    line-height: 1.56em;
+    color:#5F5449;
+  }
+ }
+
+ #navbar a{
+  padding-left: 5px;
+ 	color:#5F5449;
+ }
+ #navbar a:hover{
+ 	background-color: #5F5449;
+  color: white;
+ }
+
+ #links a:hover{
+ 	background-color: #5F5449;
+  color: white;
+ }
+ #dropdown-icon:hover,
+ #dropdown-icon:focus{
+ 	background-color: #5F5449;
+  color: white;
+ }

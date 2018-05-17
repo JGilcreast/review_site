@@ -1,0 +1,72 @@
+<div id='reviews-index'>
+  <h2 id='comments-title'>Recent Comments</h2>
+    <div id='comments-recent'>
+      <% @comments.each do |comment| %>
+        <div class='entry'>
+          <% if comment.user %>
+            <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a> <%if comment.user.admin%>[Admin]<% end %>
+          <% else %>
+            User Deleted
+          <% end %>
+          <span style='float:right'><%= comment.created_at.strftime("%I:%M %p, %m/%d/%Y") %></span>
+          <p><%= comment.content %></p>
+          <a href="/reviews/<%= comment.review.id %>">View review</a>
+        </div>
+      <% end %>
+    </div>
+  <div class='container'>
+    <h2>Most Talked About Reviews</h2>
+    <div id='review-options'>
+      <form action="/reviews/all">
+          <button type='submit'>View all reviews</button>
+      </form>
+      <% if logged_in_user %>
+        <form action='/reviews/new'>
+          <input type='submit' value='Post a review'>
+        </form>
+      <% end %>
+    </div>
+    <div class='row'>
+      <div id='reviews-top' class='col-xs-12 col-md-10'>
+        <% @reviews.each do |review| %>
+          <div class='entry'>
+            <div class='review-art'>
+              <% if review.pic_url == nil  %>
+                <% if review.media == 'Other' %>
+                  <%= image_tag('Other.png') %>
+                <% else %>
+                  <%= image_tag(review.media+'.jpg') %>
+                <% end %>
+              <% else %>
+                <img src="<%= review.pic_url %>" alt='Custom Pic Url failed'>
+              <% end %>
+            </div>
+              <div class='review-info'>
+                <% unless review.title == '' %>
+                  <h3><a href='/reviews/<%= review.id %>'><%= review.title %></a></h3>
+                  <p>"<%= review.subject %>"</p>
+                <% else %>
+                  <h3><a href='/reviews/<%= review.id %>'><%= review.subject %></a></h3>
+                <% end %>
+              <ul>
+                <li><%= review.media %></li>
+                <li><%= review.genre %></li>
+                <li>
+                  <% if review.user %>
+                    Posted by <a href="/users/<%= review.user.id %>"><%= review.user.name %></a> <%if review.user.admin%>[Admin]<% end %>
+                  <% else %>
+                    [User Deleted]
+                  <% end %>
+                </li>
+                <li><% if review.comments_count == nil %>No<% else %><%= review.comments_count %><%end%> comment<%unless review.comments_count == 1%>s<% end %></li>
+                <li>Posted <%= review.created_at.strftime("%m/%d/%Y") %></li>
+              </ul>
+            </div>
+            <div style='clear:both; display:block'></div>
+            <hr>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

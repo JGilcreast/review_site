@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <title>ReviewSite</title>
+    <meta charset="utf-8">
+    <meta name="description" content="ReviewSite is the place to write about the latest movie, show, game, song, or book you love (or hate)">
+    <meta name="application-name" content="ReviewSite">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div id='navbar-wrapper'>
+      <div id='navbar' class='navbar navbar-expand-lg navbar-light'>
+        <span class='navbar-brand' style='padding:0;'>
+          <a href='/' class='nav-link'>ReviewSite</a>
+        </span>
+
+        <button id='dropdown-icon' class="navbar-toggler" type="button" data-toggle="collapse" data-target="#links" aria-controls="links" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="links" style='justify-content:flex-end'>
+          <ul class="navbar-nav">
+            <% if session[:user_id] %>
+              <% if session[:admin] %>
+                <li class='nav-item'><a class='nav-link' href="/users/<%= session[:user_id] %>">Hi <%= session[:name] %> [Admin]</a></li>
+                <li class='nav-item'><a class='nav-link' href="/users">User List</a></li>
+              <% else %>
+                <li class='nav-item'><a class='nav-link' href="/users/<%= session[:user_id] %>">Hi <%= session[:name] %></a></li>
+              <% end %>
+              <li class='nav-item'><a class='nav-link' href="/reviews">Review List</a></li>
+              <li class='nav-item'><a class='nav-link' href="/logout">Sign Out</a></li>
+            <% else %>
+              <li class='nav-item'><a class='nav-link' href='/login'>Sign Up or Sign In</a></li>
+              <li class='nav-item'><a class='nav-link' href="/reviews">All Reviews</a></li>
+            <% end %>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class='container-fluid'>
+      <% if flash[:success] %>
+        <% flash[:success].each do |s| %>
+          <div class='alert alert-success'>
+            <%= s %>
+            <button class='close' data-dismiss='alert' aria-label="Close">
+              <span aria-hidden='true'>&times;</span>
+            </button>
+          </div>
+        <% end %>
+      <% end %>
+      <% if flash[:error] %>
+        <% flash[:error].each do |e| %>
+        <div class='alert alert-danger'>
+          <%= e %>
+          <button class='close' data-dismiss='alert' aria-label="Close">
+            <span aria-hidden='true'>&times;</span>
+          </button>
+        </div>
+        <% end %>
+      <% end %>
+    </div>
+
+      <%= yield %>
+
+  </body>
+</html>

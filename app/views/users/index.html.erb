@@ -1,0 +1,14 @@
+<div id='users-index' class='container'>
+  <h2>List of Users</h2>
+  <%= paginate @users %>
+  <div id='users-list' class='row'>
+    <% @users.each do |user| %>
+        <ul class='entry col-sm-6 col-md-4'>
+          <li><a href='/users/<%= user.id %>'><%= user.name %></a></li>
+          <li><%= user.email %></li>
+          <li><%= user.created_at.strftime("%m/%d/%Y") %></li>
+          <hr>
+        </ul>
+    <% end %>
+  </div>
+</div>

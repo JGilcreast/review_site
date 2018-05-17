@@ -1,0 +1,96 @@
+<div id='reviews-show'>
+  <% unless @review.title == '' %>
+    <h2><%= @review.title %></h2>
+  <% else %>
+    <h2><%= @review.subject %></h2>
+  <% end %>
+  <div class='container'>
+    <div class='row'>
+      <div id='review-info' class='col-lg-6 col-xl-5 justify-content-start"'>
+        <% if @review.pic_url == nil  %>
+          <% if @review.media == 'Other' %>
+            <%= image_tag('Other.png') %>
+          <% else %>
+            <%= image_tag(@review.media+'.jpg') %>
+          <% end %>
+        <% else %>
+          <div id='review-art'>
+            <img src="<%= @review.pic_url %>" alt='Custom Pic Url failed'>
+          </div>
+        <% end %>
+        <ul>
+          <li>Subject:<%= @review.subject %></li>
+          <li>Media:<% if @review.media == 'Other' %><%= @review.media %><% else %>Misc<% end %></li>
+          <li>Genre:<%= @review.genre %></li>
+          <li><% if @review.user %>
+            <a href="/users/<%= @review.user.id %>"><%= @review.user.name %></a> <% if @review.user.admin %>[Admin]<% end %>
+          <% else %>
+            [User Deleted]
+          <% end %></li>
+        </ul>
+        <% if logged_in_user == @review.user || session[:admin] %>
+          <form action='/reviews/<%= @review.id %>/edit' method='get'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type='submit' value='Edit this review'>
+          </form>
+          <form action="/reviews/<%= @review.id %>" method='post' class='form-inline'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type='hidden' name='_method' value='patch'>
+            <div class='form-group'>
+              <label for='review[pic_url]' class='sr-only'>Enter a url for a custom picture</label>
+              <input id='review[pic_url]' type='text' name='review[pic_url]' placeholder='Enter a url' class='form-control'>
+              <button type='submit'>Change pic</button>
+            </div>
+          </form>
+          <form action='/reviews/<%= @review.id %>' method='post'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input name="_method" type="hidden" value="delete">
+            <input type='submit' value='Delete this review'>
+            <br>All comments on this review will be deleted
+          </form>
+        <% end %>
+      </div>
+      <p id='review-content'><%= @review.content %></p>
+    </div>
+    <hr>
+    <div class='row'>
+      <% if @review.comments.length > 0 %>
+        <%= paginate @comments %>
+        <% @comments.each do |comment| %>
+          <div class='entry col-lg-10'>
+            <% if comment.user %>
+              <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a> <% if comment.user.admin %>[Admin]<% end %>
+            <% else %>
+              [User Deleted]
+            <% end %>
+            <span> - <%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+            <% if logged_in_user == comment.user || session[:admin] %>
+              <form action='/reviews/<%= @review.id %>/<%= comment.id%>' method='post'>
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input name="_method" type="hidden" value="delete">
+                <input type='submit' value='Delete this comment'>
+              </form>
+            <% end %>
+            <p><%= comment.content %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <h2>This review has no comments yet</h2>
+      <% end %>
+    </div>
+    <hr>
+    <div id='new-comment' class='row'>
+      <% if logged_in_user %>
+        <%= form_for @comment, :url => '/reviews/'+@review.id.to_s , :method => 'post', :html => {:class => "col-lg-10"}, validate: true do |comment| %>
+          <div class="form-group">
+            <label for='comment[content]' class='sr-only'>Enter your comment</label>
+            <%= comment.text_area :content, placeholder: 'Comment on this review...', :class => 'form-control' %>
+          </div>
+          <%= comment.submit "Post Comment" %>
+        <% end %>
+      <% else %>
+        <h2>Log in to post a comment</h2>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div id='reviews-new' class='container'>
+    <h2>Post a New Review</h2>
+    <div class='row'>
+      <%= form_for @review, :url => '/reviews' , :method => 'post', :html => {:class => "col-lg-10"}, validate: true do |review| %>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= review.label :subject, 'Subject' %>
+            <%= review.text_field :subject, :class => 'form-control', :placeholder => 'Please enter what you are reviewing' %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= review.label :title %>
+            <%= review.text_field :title, :class => 'form-control', :placeholder => 'Enter the title of your review (optional, will default to the subject if nothing is entered)' %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= review.label :media %>
+            <%= review.select( :media, [['Please choose one', ''],
+            'Videogame','Book','Car','Concert','Food','Movie','Music',
+            'Stage Play', 'Television','Toy','Misc. Services','Other'], {}, {:class => 'form-control'} ) %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= review.label :genre %>
+            <%= review.text_field :genre, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= review.text_area :content, rows: 6, placeholder: 'Enter the content of your review here...', :class => 'form-control' %>
+        </div>
+        <%= review.submit "Post Review", id: 'review-submit' %>
+      <% end %>
+
+
+      <!-- <form class='col-lg-10' action='/reviews' method='post'>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for='review[title]'>Title</label>
+            <input type='text' name='review[title]' class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label for='review[genre]'>Genre</label>
+            <input type='text' name='review[genre]' class="form-control">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for='review[media]'>Media</label>
+            <input type='text' name='review[media]' class="form-control">
+          </div>
+          <div class="form-group col-md-6">
+            <label for='review[pic_url]'>Pic url (optional)</label>
+            <input type='text' name='review[pic_url]' class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea name='review[content]' class="form-control"
+           placeholder="Enter the content of your review here..." rows='6'></textarea>
+        </div>
+        <input type='submit' id='review-submit' value='Post Review' >
+      </form> -->
+    </div>
+  </div>
+</div>

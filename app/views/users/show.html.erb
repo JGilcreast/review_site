@@ -1,0 +1,77 @@
+<div id='users-show' class='container'>
+  <h2><%= @user.name %></h2>
+  <div class='row'>
+    <div id='user-info' class='col-lg-3'>
+      <%= @user.email %></br>
+      Member since <%= @user.created_at.strftime("%m/%d/%Y") %></br>
+        <% if @user == logged_in_user %>
+          <form action='/users/<%= @user.id %>' method='post'>
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type='hidden' name='_method' value='patch'>
+            <% if @user.bio == nil || @user.bio == '' %>
+              <div class='form-group'>
+                <textarea name='user[bio]' placeholder="Enter a bio for your user page here!" class='form-control' rows=4></textarea>
+              </div>
+            <% else %>
+              <div class='form-group'>
+                <textarea value='<%= @user.bio %>' placeholder="<%= @user.bio %>" name='user[bio]' class='form-control' rows=4></textarea>
+              </div>
+          <% end %>
+          <button type='submit'>Update your bio</button>
+        </form>
+      <% end %>
+      <% if logged_in_user %>
+        <% if logged_in_user == @user || logged_in_user.admin %>
+        <hr>
+        <form action='/users/<%= @user.id %>' method='post'>
+          <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+          <input name="_method" type="hidden" value="delete">
+          <input type='submit' value='Delete this account'>
+          <br>Your posts/comments will not be deleted automatically
+        </form>
+        <% end %>
+      <% end %>
+    </div>
+    <div id='user-content' class='col-lg-9'>
+      <div>
+        <h2>Reviews Posted</h2>
+        <div class='post-frame'>
+          <% if @user.reviews.length > 0 %>
+            <% @user.reviews.each do |review| %>
+              <div class='entry' style='clear:both'>
+                <p style='margin:16px'>
+                  <% unless review.title == '' %>
+                    <h5><%= review.title %></h5>
+                  <% else %>
+                    <h5><%= review.subject %></h5>
+                  <% end %></p>
+                <a href='/reviews/<%= review.id %>'>go to review</a>
+                <span style='float:right'><%= review.created_at.strftime("%m/%d/%Y") %></span>
+                <hr style="clear:both">
+              </div>
+            <% end %>
+          <% else %>
+            <h2><%= @user.name %> hasn't posted any reviews yet!</h2>
+          <% end %>
+        </div>
+      </div>
+      <div>
+        <h2>Comments Posted</h2>
+        <div class='post-frame'>
+          <% if @user.comments.length > 0 %>
+            <% @user.comments.each do |comment| %>
+              <div class='entry' style='clear:both'>
+                <p style='margin:16px'><%= comment.content %></p>
+                <a href='/reviews/<%= comment.review.id %>'>go to review</a>
+                <span style='float:right'><%= comment.created_at.strftime("%m/%d/%Y") %></span>
+                <hr style="clear:both">
+              </div>
+            <% end %>
+          <% else %>
+            <h2><%= @user.name %> hasn't posted any comments yet!</h2>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

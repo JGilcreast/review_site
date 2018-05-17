@@ -1,0 +1,55 @@
+<div id='reviews-index' class='container'>
+  <h2>All Reviews</h2>
+  <%= paginate @reviews %>
+  <div id='review-options'>
+    <form action="/reviews">
+        <button type='submit'>View top reviews</button>
+    </form>
+    <% if logged_in_user %>
+      <form action='/reviews/new'>
+        <input type='submit' value='Post a review'>
+      </form>
+    <% end %>
+  </div>
+  <div class='row'>
+    <div id='reviews-top' class='col-xs-12 col-md-10'>
+    <% @reviews.each do |review| %>
+      <div class='entry'>
+        <% if review.pic_url == nil  %>
+          <% if review.media == 'Other' %>
+            <%= image_tag('Other.png') %>
+          <% else %>
+            <%= image_tag(review.media+'.jpg') %>
+          <% end %>
+        <% else %>
+          <div class='review-art'>
+            <img src="<%= review.pic_url %>" alt='Custom Pic Url failed'>
+          </div>
+        <% end %>
+          <div class='review-info'>
+            <% unless review.title == '' %>
+              <h3><a href='/reviews/<%= review.id %>'><%= review.title %></a></h3>
+              <p>"<%= review.subject %>"</p>
+            <% else %>
+              <h3><a href='/reviews/<%= review.id %>'><%= review.subject %></a></h3>
+            <% end %>
+          <ul>
+            <li><%= review.media %></li>
+            <li><%= review.genre %></li>
+            <li>
+              <% if review.user %>
+                Posted by <a href="/users/<%= review.user.id %>"><%= review.user.name %></a> <%if review.user.admin%>[Admin]<% end %>
+              <% else %>
+                [User Deleted]
+              <% end %>
+            </li>
+            <li>Posted <%= review.created_at.strftime("%m/%d/%Y") %></li>
+          </ul>
+        </div>
+        <div style='clear:both; display:block'></div>
+        <hr>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>

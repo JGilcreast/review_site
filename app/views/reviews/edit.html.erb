@@ -1,0 +1,34 @@
+<div id='reviews-new' class='container'>
+    <h2>Edit this Review</h2>
+    <div class='row'>
+      <%= form_for @review, :url => '/reviews/'+@review.id.to_s+'/edit' , :method => 'post', :html => {:class => "col-lg-10"}, validate: true do |review| %>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= review.label :subject, 'Subject' %>
+            <%= review.text_field :subject, :class => 'form-control', :placeholder => 'Please enter what you are reviewing' %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= review.label :title %>
+            <%= review.text_field :title, :class => 'form-control', :placeholder => 'Enter the title of your review (optional, will default to the subject if nothing is entered)' %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <%= review.label :media %>
+            <%= review.select( :media, [['Please choose one', ''],
+            'Videogame','Book','Car','Concert','Food','Movie','Music',
+            'Stage Play', 'Television','Toy','Misc. Services','Other'], {}, {:class => 'form-control'} ) %>
+          </div>
+          <div class="form-group col-md-6">
+            <%= review.label :genre %>
+            <%= review.text_field :genre, :value => @review.genre, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= review.text_area :content, rows: 6,  placeholder: 'Enter the content of your review here...', :class => 'form-control' %>
+        </div>
+        <%= review.submit "Change Review", id: 'review-submit' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,195 @@
+ // Place all the styles related to the Reviews controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Raleway', Helvetica, Arial, sans-serif;
+  font-size: 30px;
+  line-height: 70px;
+  color:#5F5449;
+  text-align: center;
+}
+p, div {
+  font-family: 'Goudy Bookletter 1911', Georgia, Times, serif;
+  font-size: 15px;
+  line-height: 25px;
+  color:#5F5449;
+}
+
+//**************************************************************
+//
+// home.html css starts here
+//
+//**************************************************************
+#reviews-home{
+  #pic{
+    margin: 0 auto;
+    float: none;
+    height: 21.875em;
+    background-image: url('/assets/main-page.jpg');
+  }
+
+  p{
+    text-align: justify;
+    padding: 0 5% 5%;
+  }
+}
+//**************************************************************
+//
+// index.html and all.html css starts here
+//
+//**************************************************************
+#reviews-index{
+  #comments-title{
+    background-color: #D5D6AA;
+    margin: 0;
+  }
+
+  #comments-recent{
+    // background-color: #D5D6AA;
+    background-color: #92977E;
+    color: white;
+    display: block;
+    padding: 1em;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 14.8em;
+
+    .entry{
+      background-color:#EADDA6;
+      margin: 0 .938em 0 0;
+      padding: 0.313em;
+      border-radius: 2px;
+      height: 100%;
+      display: inline-block;
+      width: 21.875em;
+      white-space: normal;
+      p{
+        height: 6.875em;
+        padding: 0 0.313em;
+        text-align: justify;
+        overflow-y: auto;
+      }
+
+    }
+  }
+  #reviews-top{
+    float: none;
+    margin: 0 auto;
+    .review-art{
+      float: left;
+      height: 300px;
+      width: 200px;
+      background-color: #D5D6AA;
+      img{
+        height: 300px;
+        width: 200px;
+      }
+    }
+    h3{
+      margin: none;
+      line-height: 2.188em;
+    }
+    p{
+      text-align: center;
+    }
+    img{
+      float: left;
+      vertical-align: top;
+    }
+    .review-info{
+      overflow:hidden
+    }
+  }
+  #review-options{
+    text-align: center;
+    padding-bottom: 0.313em;
+    form{
+      display:inline-block
+    }
+  }
+  @media (min-width: 992px) {
+    #review-options{
+      float: right;
+      form{
+        display: block;
+        padding-top: 0.625em;
+      }
+    }
+  }
+  @media(max-width: 480px){
+    .review-art{
+      display: none;
+    }
+  }
+}
+//**************************************************************
+//
+// new.html css starts here
+//
+//**************************************************************
+#reviews-new{
+  h2{
+    margin: 0 auto;
+  }
+  form{
+    margin: 0 auto;
+  }
+
+  #review-submit{
+    float:right;
+    padding-top: 0.313em;
+  }
+}
+//**************************************************************
+//
+// show.html css starts here
+//
+//**************************************************************
+#reviews-show{
+  #review-info{
+    padding: 0.313em;
+    float: right;
+    #review-art{
+      display:inline-block;
+      height: 300px;
+      width: 200px;
+      background-color: #D5D6AA;
+      img{
+        height: 300px;
+        width: 200px;
+      }
+    }
+    ul{
+      list-style-position: inside;
+      vertical-align: top;
+      padding:4%;
+      display: inline-block;
+    }
+    form{
+      padding: 0.313em;
+    }
+  }
+  #review-content{
+    text-align: justify;
+  }
+
+  .entry{
+    display: block;
+    margin: 0 auto;
+    form{
+      float: right;
+    }
+    p{
+      overflow-y: auto;
+    }
+  }
+  h2{
+    margin: 0 auto;
+  }
+  #new-comment form{
+    text-align: center;
+    margin: 0 auto;
+  }
+}
