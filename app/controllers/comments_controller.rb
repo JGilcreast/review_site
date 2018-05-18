@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
     comment = Comment.find_by_id(params['comment_id'])
     if (session[:user_id] == comment.user.id) or (session[:admin] == true)
       comment.destroy
-      flash[:success] = ["Comment successfully posted!"]
+      flash[:success] = ["Comment successfully deleted!"]
     else
       flash[:error] = ["You cannot delete someone else's comment, log in as the comment's user ot contact an admin to delete it"]
     end
