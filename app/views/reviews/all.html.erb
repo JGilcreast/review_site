@@ -15,17 +15,17 @@
     <div id='reviews-top' class='col-xs-12 col-md-10'>
     <% @reviews.each do |review| %>
       <div class='entry'>
-        <% if review.pic_url == nil  %>
-          <% if review.media == 'Other' %>
-            <%= image_tag('Other.png') %>
+        <div class='review-art'>
+          <% if review.pic_url == nil  %>
+            <% if review.media == 'Other' %>
+              <%= image_tag('Other.png') %>
+            <% else %>
+              <%= image_tag(review.media+'.jpg') %>
+            <% end %>
           <% else %>
-            <%= image_tag(review.media+'.jpg') %>
-          <% end %>
-        <% else %>
-          <div class='review-art'>
             <img src="<%= review.pic_url %>" alt='Custom Pic Url failed'>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
           <div class='review-info'>
             <% unless review.title == '' %>
               <h3><a href='/reviews/<%= review.id %>'><%= review.title %></a></h3>

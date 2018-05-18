@@ -80,7 +80,11 @@ class ReviewsController < ApplicationController
     if( review.user == logged_in_user || session[:admin] )
       Review.destroy(params['id'])
       unless Review.exists?(id: params['id'])
-        flash[:success] = ["\"#{review.title}\" has been deleted"]
+        unless review.title == '' || review.title == nil
+          flash[:success] = ["\"#{review.title}\" review has been deleted"]
+        else
+          flash[:success] = ["\"#{review.subject}\" review has been deleted"]
+        end
         redirect_to '/'
         return
       else

@@ -13,8 +13,8 @@ class SessionsController < ApplicationController
       end
     else
       flash[:error] = ["That email is not registered yet"]
-      redirect_to '/login'
     end
+    redirect_to '/login'
   end
   def destroy
     session.delete(:user_id)
@@ -22,5 +22,4 @@ class SessionsController < ApplicationController
     session.delete(:name)
     redirect_to '/'
   end
-
 end

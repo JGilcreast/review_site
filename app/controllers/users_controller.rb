@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     new_user.errors.messages.values.each { |errorArr| errorArr.each { |msg| errors.push(msg) }}
     flash[:error] = errors
     redirect_to '/login'
+    return
   end
 
   def update
@@ -42,6 +43,7 @@ class UsersController < ApplicationController
       flash[:error] =["You are not authorized to change that user, contact an admin or log in as that user"]
     end
     redirect_to "/users/#{params['id']}"
+    return
   end
 
   def show
@@ -57,12 +59,14 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find_by_id(params['id'])
-    if( user == logged_in_user || logged_in_user.admin )
+    currentuser = logged_in_user
+    if( user == currentuser || currentuser.admin )
       User.destroy(params['id'])
       unless User.exists?(id: params['id'])
         flash[:success] = ["#{ user.name }'s account has been successfully deleted, Goodbye!"]
-        if(params['id'] == logged_in_user)
+        if(params['id'] == currentuser.id.to_s)
           redirect_to '/logout'
+          return
         else
           redirect_to '/'
           return
