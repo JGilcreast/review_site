@@ -77,6 +77,11 @@ class ReviewsController < ApplicationController
 
   def destroy
     review = Review.includes(:user).find_by_id(params['id'])
+    if (review == nil)
+      flash[:error] = ["Can't find a review with that ID"]
+      redirect_to '/'
+      return
+    end
     if( review.user == logged_in_user || session[:admin] )
       Review.destroy(params['id'])
       unless Review.exists?(id: params['id'])

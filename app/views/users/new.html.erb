@@ -9,7 +9,7 @@
       <%= label_tag 'password' %>
       <%= password_field_tag 'password', nil, class: 'form-control'  %>
     </div>
-    <%= submit_tag "Login"  %>
+    <%= submit_tag "Login", onclick: 'StopDoubleSubmit(this);'  %>
   <% end %>
   <%= form_for @user, :url => '/users' , :method => 'post', :html => {:id => "register"}, validate: true do |user| %>
   <h3 style='text-align:center'>Register a new account</h3>
@@ -33,7 +33,7 @@
       <%= user.check_box :admin, :class => 'form-check-input' %>
       <%= user.label :admin, "Register as admin?", :class => 'form-check-label' %>
     </div></div>
-    <%= user.submit "Register" %>
+    <%= user.submit "Register", onclick: 'StopDoubleSubmit(this);' %>
   <% end %>
 </div>
   <!-- <form id='login' action='/login' name='login' method='post'>

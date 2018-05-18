@@ -24,6 +24,11 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find_by_id(params['comment_id'])
+    if (comment == nil)
+      flash[:error] = ["Can't find a comment with that ID"]
+      redirect_to '/'
+      return
+    end
     if (session[:user_id] == comment.user.id) or (session[:admin] == true)
       comment.destroy
       flash[:success] = ["Comment successfully deleted!"]

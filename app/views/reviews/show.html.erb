@@ -31,7 +31,7 @@
         <% if logged_in_user == @review.user || session[:admin] %>
           <form action='/reviews/<%= @review.id %>/edit' method='get'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type='submit' value='Edit this review'>
+            <input type='submit' value='Edit this review' onclick="StopDoubleSubmit(this)">
           </form>
           <form action="/reviews/<%= @review.id %>" method='post' class='form-inline'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
@@ -39,13 +39,13 @@
             <div class='form-group'>
               <label for='review[pic_url]' class='sr-only'>Enter a url for a custom picture</label>
               <input id='review[pic_url]' type='text' name='review[pic_url]' placeholder='Enter a url' class='form-control'>
-              <button type='submit'>Change pic</button>
+              <input type='submit' value='Change Pic' onclick="StopDoubleSubmit(this)">
             </div>
           </form>
           <form action='/reviews/<%= @review.id %>' method='post'>
             <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
             <input name="_method" type="hidden" value="delete">
-            <input type='submit' value='Delete this review'>
+            <input type='submit' value='Delete this review' onclick="StopDoubleSubmit(this)">
             <br>All comments on this review will be deleted
           </form>
         <% end %>
@@ -68,7 +68,7 @@
               <form action='/reviews/<%= @review.id %>/<%= comment.id%>' method='post'>
                 <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
                 <input name="_method" type="hidden" value="delete">
-                <input type='submit' value='Delete this comment'>
+                <input type='submit' value='Delete this comment' onclick="StopDoubleSubmit(this)">
               </form>
             <% end %>
             <p><%= comment.content %></p>
@@ -86,7 +86,7 @@
             <label for='comment[content]' class='sr-only'>Enter your comment</label>
             <%= comment.text_area :content, placeholder: 'Comment on this review...', :class => 'form-control' %>
           </div>
-          <%= comment.submit "Post Comment" %>
+          <%= comment.submit "Post Comment", onclick: 'StopDoubleSubmit(this);'  %>
         <% end %>
       <% else %>
         <h2>Log in to post a comment</h2>

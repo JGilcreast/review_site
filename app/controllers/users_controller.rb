@@ -59,6 +59,11 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find_by_id(params['id'])
+    if (user == nil)
+      flash[:error] = ["Can't find a user with that ID"]
+      redirect_to '/'
+      return
+    end
     currentuser = logged_in_user
     if( user == currentuser || currentuser.admin )
       User.destroy(params['id'])

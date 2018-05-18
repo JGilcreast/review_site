@@ -17,3 +17,7 @@
 //= require bootstrap-sprockets
 //= require rails.validations
 //= require_tree .
+function StopDoubleSubmit(btn){
+  btn.form.submit();
+  btn.disabled = true;
+}
