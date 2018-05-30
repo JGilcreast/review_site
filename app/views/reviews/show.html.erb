@@ -6,72 +6,74 @@
   <% end %>
   <div class='container'>
     <div class='row'>
-      <div id='review-info' class='col-lg-6 col-xl-5 justify-content-start"'>
-        <% if @review.pic_url == nil  %>
-          <% if @review.media == 'Other' %>
-            <%= image_tag('Other.png') %>
+      <div id='review-head' class='col-sm-12 col-md-9 col-lg-7'>
+        <div id='review-art'>
+          <% if @review.pic_url == nil  %>
+            <% if @review.media == 'Other' %>
+              <%= image_tag('Other.png') %>
+            <% else %>
+              <%= image_tag(@review.media+'.jpg') %>
+            <% end %>
           <% else %>
-            <%= image_tag(@review.media+'.jpg') %>
-          <% end %>
-        <% else %>
-          <div id='review-art'>
             <img src="<%= @review.pic_url %>" alt='Custom Pic Url failed'>
-          </div>
-        <% end %>
-        <ul>
-          <li>Subject:<%= @review.subject %></li>
-          <li>Media:<% if @review.media == 'Other' %><%= @review.media %><% else %>Misc<% end %></li>
-          <li>Genre:<%= @review.genre %></li>
-          <li><% if @review.user %>
-            <a href="/users/<%= @review.user.id %>"><%= @review.user.name %></a> <% if @review.user.admin %>[Admin]<% end %>
-          <% else %>
-            [User Deleted]
-          <% end %></li>
-        </ul>
-        <% if logged_in_user == @review.user || session[:admin] %>
-          <form action='/reviews/<%= @review.id %>/edit' method='get'>
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type='submit' value='Edit this review' onclick="StopDoubleSubmit(this)">
-          </form>
-          <form action="/reviews/<%= @review.id %>" method='post' class='form-inline'>
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input type='hidden' name='_method' value='patch'>
-            <div class='form-group'>
-              <label for='review[pic_url]' class='sr-only'>Enter a url for a custom picture</label>
-              <input id='review[pic_url]' type='text' name='review[pic_url]' placeholder='Enter a url' class='form-control'>
-              <input type='submit' value='Change Pic' onclick="StopDoubleSubmit(this)">
-            </div>
-          </form>
-          <form action='/reviews/<%= @review.id %>' method='post'>
-            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-            <input name="_method" type="hidden" value="delete">
-            <input type='submit' value='Delete this review' onclick="StopDoubleSubmit(this)">
-            <br>All comments on this review will be deleted
-          </form>
-        <% end %>
+          <% end %>
+        </div>
+        <div id='review-options'>
+          <ul>
+            <li>Subject:<%= @review.subject %></li>
+            <li>Media:<% if @review.media == 'Other' %><%= @review.media %><% else %>Misc<% end %></li>
+            <li>Genre:<%= @review.genre %></li>
+            <li><% if @review.user %>
+              <a href="/users/<%= @review.user.id %>"><%= @review.user.name %></a> <% if @review.user.admin %>[Admin]<% end %>
+            <% else %>
+              [User Deleted]
+            <% end %></li>
+          </ul>
+          <% if logged_in_user == @review.user || session[:admin] %>
+            <form action='/reviews/<%= @review.id %>/edit' method='get'>
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type='submit' value='Edit this review' onclick="StopDoubleSubmit(this)">
+              </form><br>
+            <form action='/reviews/<%= @review.id %>' method='post'>
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input name="_method" type="hidden" value="delete">
+              <input type='submit' value='Delete this review' onclick="StopDoubleSubmit(this)"><br>
+              All comments on this review will be deleted
+            </form>
+            <form action="/reviews/<%= @review.id %>" method='post' class='form-inline'>
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type='hidden' name='_method' value='patch'>
+              <div class='form-group'>
+                <label for='review[pic_url]' class='sr-only'>Enter a url for a custom picture</label>
+                <input id='review[pic_url]' type='text' name='review[pic_url]' placeholder='Enter a url' class='form-control'>
+                <input type='submit' value='Change Pic' onclick="StopDoubleSubmit(this)">
+              </div>
+            </form>
+          <% end %>
+        </div>
       </div>
-      <p id='review-content'><%= @review.content %></p>
     </div>
+    <p id='review-content' class="row"><%= simple_format(@review.content, {}, sanitize: true) %></p>
     <hr>
     <div class='row'>
       <% if @review.comments.length > 0 %>
         <%= paginate @comments %>
         <% @comments.each do |comment| %>
           <div class='entry col-lg-10'>
-            <% if comment.user %>
-              <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a> <% if comment.user.admin %>[Admin]<% end %>
-            <% else %>
-              [User Deleted]
-            <% end %>
-            <span> - <%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
-            <% if logged_in_user == comment.user || session[:admin] %>
-              <form action='/reviews/<%= @review.id %>/<%= comment.id%>' method='post'>
-                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-                <input name="_method" type="hidden" value="delete">
-                <input type='submit' value='Delete this comment' onclick="StopDoubleSubmit(this)">
-              </form>
-            <% end %>
-            <p><%= comment.content %></p>
+              <% if comment.user %>
+                <a href="/users/<%= comment.user.id %>"><%= comment.user.name %></a> <% if comment.user.admin %>[Admin]<% end %>
+              <% else %>
+                [User Deleted]
+              <% end %>
+              <span> - <%= comment.created_at.strftime("%m/%d/%Y %I:%M %p") %></span>
+              <% if logged_in_user == comment.user || session[:admin] %>
+                <form action='/reviews/<%= @review.id %>/<%= comment.id%>' method='post'>
+                  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                  <input name="_method" type="hidden" value="delete">
+                  <input type='submit' value='Delete this comment' onclick="StopDoubleSubmit(this)">
+                </form>
+              <% end %>
+            <div class=comment-content><%= simple_format(comment.content,{}, sanitize: true) %></div>
           </div>
         <% end %>
       <% else %>

@@ -149,29 +149,52 @@ p, div {
 //**************************************************************
 #reviews-show{
   padding-bottom: 15px;
-  #review-info{
-    padding: 0.313em;
-    float: right;
-    #review-art{
-      display:inline-block;
-      height: 300px;
-      width: 200px;
-      background-color: #D5D6AA;
-      img{
-        height: 300px;
-        width: 200px;
-      }
-    }
-    ul{
-      list-style-position: inside;
-      vertical-align: top;
-      padding:4%;
-      display: inline-block;
-    }
-    form{
-      padding: 0.313em;
+  #review-head{
+    margin: 0 auto;
+  }
+  #review-art{
+    width: 200px;
+    height: 300px;
+    display: inline-block;
+    float: left;
+    background-color: #D5D6AA;
+    img{
+      height: 100%;
+    	width: 100%;
     }
   }
+  ul{
+    vertical-align: top;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  #review-options{
+    padding-left:10px;
+    form{
+      text-align: center;
+      padding: 0.313em;
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+
+  @media(max-width:550px){
+  	#review-art{
+  		display: block;
+  		margin: 0 auto;
+  		float: none;
+  	}
+    #review-options{
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    form{
+      padding: 0;
+    }
+  }
+
   #review-content{
     text-align: justify;
   }
@@ -182,7 +205,10 @@ p, div {
     form{
       float: right;
     }
-    p{
+    .comment-content{
+      clear: both;
+      margin-top: 2px;
+      max-height: 250px;
       overflow-y: auto;
     }
   }
