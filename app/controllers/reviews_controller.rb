@@ -3,7 +3,7 @@ class ReviewsController < ApplicationController
   end
 
   def index
-    @reviews = Review.includes(:user).order(created_at: :desc).limit(10)
+    @reviews = Review.includes(:user).order(comments_count: :desc).limit(10)
     @comments = Comment.includes(:user).order(created_at: :desc).limit(10)
   end
 
